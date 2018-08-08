@@ -19,7 +19,6 @@ class GoBang extends Component {
     const {winWidth, winHeight, gridSize, cheeSize} = this.props;
     return (
       <div className = "container">
-        <Setting/>
         <Stage
           ref = "stage"
           width = {winWidth}
@@ -42,6 +41,7 @@ class GoBang extends Component {
             />
           </Layer>
         </Stage>
+        <Setting/>
       </div>
 
     )

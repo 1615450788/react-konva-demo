@@ -36,7 +36,6 @@ export default class Board extends Component {
   }
   render(){
     let { width,height} = this.props;
-    console.log(this.props)
      return (
       <Group>
         <Rect

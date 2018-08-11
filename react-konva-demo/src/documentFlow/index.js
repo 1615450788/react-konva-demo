@@ -59,22 +59,24 @@ export default class Div extends Component {
         //处理样式继承，计算出继承后样式
         const props = Object.assign({ x, y, width, height: 0 }, v.props);
 
+        //如果为子Div组件则不计算ratio，让其自行计算
+        if (v.type.name === 'Div') {
+            let obj = {ratio}
+            if(props.height===0){
+                console.log(this.state.height[indexDiv])
+                obj.height=this.state.height[indexDiv]
+            }
+            Object.assign(props, obj)
+            indexDiv++
+        }
+
         //判断是否绝对定位，否则不进行布局计算
         if (!this.isAbsolute(v.props)) {
           Object.assign(props, this.calcLayout(props),{changeHeight})
         }
 
-        //如果为子Div组件则不计算ratio，让其自行计算
-        if (v.type.name === 'Div') {
-          let obj = {ratio}
-          if(props.height===0){
-            console.log(this.state.height[indexDiv])
-            obj.height=this.state.height[indexDiv]
-          }
-          Object.assign(props, obj)
-          indexDiv++
-        } else {
-          Object.assign(props, this.calcRatio(props))
+        if(v.type.name !== 'Div'){
+            Object.assign(props, this.calcRatio(props))
         }
 
         result.push({ ...v, props })
@@ -149,7 +151,7 @@ export default class Div extends Component {
       styles.height = this.h = this.sumHeight + this.height
     }
     Object.assign(styles, this.calcRatio(styles))
-    console.log(this)
+    console.log(children)
     return (
       <Group {...events}>
         <Rect {...styles} />
